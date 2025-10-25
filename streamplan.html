@@ -6,9 +6,85 @@
     <title>Lea_Rumi | Chaos Haus - Streamplan</title>
     
     <style>
-        /* [ ... KOMPLETTER CSS-CODE aus der index.html HIER EINFÜGEN ... ] */
+        /* 1. CSS-Variablen für die Farbpalette */
+        :root {
+            --farbe-orange: #FF7F50;       /* Coral (Anfang) */
+            --farbe-hell-lila: #DDA0DD;    /* Plum (Mitte) */
+            --farbe-dunkel-lila: #4B0082;  /* Indigo (Ende) */
+            --schriftfarbe-hell: #FFFFFF;
+            --schriftfarbe-dunkel: #333333;
+            --menu-hover: #5D3FD3;         /* Dunkleres Lila für Hover */
+        }
+
+        /* 2. Allgemeine Formatierung und Hintergrund */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--schriftfarbe-dunkel);
+            background: linear-gradient(135deg, var(--farbe-orange), var(--farbe-hell-lila), var(--farbe-dunkel-lila));
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 3. Header- und Navigations-Bereich */
+        header {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: var(--schriftfarbe-hell);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-titel h1 {
+            font-size: 2.2em;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--schriftfarbe-hell);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.aktiv {
+            background-color: var(--menu-hover);
+        }
+
+        /* 4. Hauptinhaltsbereich */
+        main {
+            padding: 40px;
+            flex-grow: 1;
+        }
+
+        .inhalts-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
         
-        /* Zusätzliches Styling nur für den Streamplan */
+        /* Zusätzliches Styling nur für den Streamplan (für bessere Lesbarkeit) */
         .plan-eintrag {
             background-color: #f7f7f7;
             padding: 15px;
@@ -17,6 +93,7 @@
             border-radius: 5px;
             display: flex;
             justify-content: space-between;
+            font-size: 1.1em;
         }
         .tag {
             font-weight: bold;
@@ -26,15 +103,22 @@
         .details {
             flex-grow: 1;
         }
+        .uhrzeit {
+            font-weight: bold;
+            color: var(--farbe-orange);
+        }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="header-titel">
+            <h1>Lea_Rumi | Chaos Haus</h1>
+        </div>
         <nav>
             <ul>
-                <li><a href="index.html">Startseite</a></li>
-                <li><a href="streamplan.html" class="aktiv">Streamplan</a></li> 
+                <li><a href="index.html">Startseite</a></li> 
+                <li><a href="streamplan.html" class="aktiv">Streamplan</a></li>
                 <li><a href="neuigkeiten.html">Neuigkeiten/Announcements</a></li>
                 <li><a href="verlinkungen.html">Verlinkungen</a></li>
                 <li><a href="twitch.html">Twitch</a></li>
@@ -49,31 +133,26 @@
             <div id="streamplanContainer">
                 <p>Bitte warten...</p>
             </div>
-            
         </div>
     </main>
 
     <script>
-        // Funktion zum Laden der JSON-Daten
         function ladeStreamplan() {
-            fetch('streamplan.json') // Holt die Daten aus der Datei streamplan.json
+            fetch('streamplan.json')
                 .then(response => {
-                    // Prüft, ob die Datei gefunden wurde
                     if (!response.ok) {
-                        throw new Error('Netzwerk-Antwort war nicht OK: ' + response.statusText);
+                        throw new Error('Fehler beim Laden der Streamplan-Daten: ' + response.statusText);
                     }
-                    return response.json(); // Wandelt die Antwort in ein JavaScript-Objekt um
+                    return response.json();
                 })
                 .then(daten => {
-                    // Update des Titels und der Aktualisierungszeit
                     document.getElementById('planTitel').textContent = daten.titel;
                     document.getElementById('planAktualisiert').textContent = 
                         'Zuletzt aktualisiert: ' + daten.datum_aktualisiert;
 
                     const container = document.getElementById('streamplanContainer');
-                    container.innerHTML = ''; // Leert den Lade-Text
+                    container.innerHTML = '';
                     
-                    // Erstellt HTML für jeden Eintrag im Plan
                     daten.plan.forEach(eintrag => {
                         const div = document.createElement('div');
                         div.className = 'plan-eintrag';
@@ -88,11 +167,9 @@
                 .catch(error => {
                     console.error('Fehler beim Laden des Streamplans:', error);
                     document.getElementById('streamplanContainer').innerHTML = 
-                        '<p style="color: red;">Der Streamplan konnte leider nicht geladen werden.</p>';
+                        '<p style="color: red;">Der Streamplan konnte leider nicht geladen werden. Bitte prüfen Sie die streamplan.json Datei.</p>';
                 });
         }
-
-        // Ruft die Funktion auf, sobald die Seite geladen ist
         ladeStreamplan();
     </script>
 </body>
