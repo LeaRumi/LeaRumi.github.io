@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lea_Rumi | Chaos Haus - Neuigkeiten</title>
+    
+    <style>
+        /* 1. CSS-Variablen für die Farbpalette */
+        :root {
+            --farbe-orange: #FF7F50;       /* Coral (Anfang) */
+            --farbe-hell-lila: #DDA0DD;    /* Plum (Mitte) */
+            --farbe-dunkel-lila: #4B0082;  /* Indigo (Ende) */
+            --schriftfarbe-hell: #FFFFFF;
+            --schriftfarbe-dunkel: #333333;
+            --menu-hover: #5D3FD3;         /* Dunkleres Lila für Hover */
+        }
+
+        /* 2. Allgemeine Formatierung und Hintergrund */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--schriftfarbe-dunkel);
+            background: linear-gradient(135deg, var(--farbe-orange), var(--farbe-hell-lila), var(--farbe-dunkel-lila));
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 3. Header- und Navigations-Bereich */
+        header {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: var(--schriftfarbe-hell);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-titel h1 {
+            font-size: 2.2em;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--schriftfarbe-hell);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.aktiv {
+            background-color: var(--menu-hover);
+        }
+
+        /* 4. Hauptinhaltsbereich */
+        main {
+            padding: 40px;
+            flex-grow: 1;
+        }
+
+        .inhalts-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Zusätzliches Styling für die Neuigkeiten */
+        .post {
+            background-color: #f7f7f7;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--farbe-orange);
+            border-radius: 5px;
+        }
+        .post h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: var(--farbe-dunkel-lila);
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .kategorie {
+            display: inline-block;
+            background-color: var(--farbe-hell-lila);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-titel">
+            <h1>Lea_Rumi | Chaos Haus</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="streamplan.html">Streamplan</a></li>
+                <li><a href="neuigkeiten.html" class="aktiv">Neuigkeiten/Announcements</a></li> 
+                <li><a href="verlinkungen.html">Verlinkungen</a></li>
+                <li><a href="twitch.html">Twitch</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="inhalts-box">
+            <h2 id="newsTitel">Lade Neuigkeiten...</h2>
+            <div id="newsContainer">
+                <p>Bitte warten...</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function ladeNeuigkeiten() {
+            fetch('neuigkeiten.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Fehler beim Laden der Neuigkeiten-Daten: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(daten => {
+                    document.getElementById('newsTitel').textContent = daten.titel;
+
+                    const container = document.getElementById('newsContainer');
+                    container.innerHTML = '';
+                    
+                    // Füllt den Container mit jedem Post
+                    daten.posts.forEach(post => {
+                        const div = document.createElement('div');
+                        div.className = 'post';
+                        div.innerHTML = `
+                            <h3>${post.titel}</h3>
+                            <div class="post-meta">
+                                ${post.datum} 
+                                <span class="kategorie">${post.kategorie}</span>
+                            </div>
+                            <p>${post.inhalt}</p>
+                        `;
+                        container.appendChild(div);
+                    });
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Neuigkeiten:', error);
+                    document.getElementById('newsContainer').innerHTML = 
+                        '<p style="color: red;">Die Neuigkeiten konnten leider nicht geladen werden. Bitte prüfen Sie die neuigkeiten.json Datei.</p>';
+                });
+        }
+        ladeNeuigkeiten();
+    </script>
+</body>
+</html>
