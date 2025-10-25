@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lea_Rumi | Chaos Haus - Streamplan</title>
+    
+    <style>
+        /* [ ... KOMPLETTER CSS-CODE aus der index.html HIER EINFÜGEN ... ] */
+        
+        /* Zusätzliches Styling nur für den Streamplan */
+        .plan-eintrag {
+            background-color: #f7f7f7;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 5px solid var(--farbe-hell-lila);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .tag {
+            font-weight: bold;
+            color: var(--farbe-dunkel-lila);
+            flex-basis: 150px;
+        }
+        .details {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="streamplan.html" class="aktiv">Streamplan</a></li> 
+                <li><a href="neuigkeiten.html">Neuigkeiten/Announcements</a></li>
+                <li><a href="verlinkungen.html">Verlinkungen</a></li>
+                <li><a href="twitch.html">Twitch</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="inhalts-box">
+            <h2 id="planTitel">Lade Streamplan...</h2>
+            <p id="planAktualisiert"></p>
+            <div id="streamplanContainer">
+                <p>Bitte warten...</p>
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+        // Funktion zum Laden der JSON-Daten
+        function ladeStreamplan() {
+            fetch('streamplan.json') // Holt die Daten aus der Datei streamplan.json
+                .then(response => {
+                    // Prüft, ob die Datei gefunden wurde
+                    if (!response.ok) {
+                        throw new Error('Netzwerk-Antwort war nicht OK: ' + response.statusText);
+                    }
+                    return response.json(); // Wandelt die Antwort in ein JavaScript-Objekt um
+                })
+                .then(daten => {
+                    // Update des Titels und der Aktualisierungszeit
+                    document.getElementById('planTitel').textContent = daten.titel;
+                    document.getElementById('planAktualisiert').textContent = 
+                        'Zuletzt aktualisiert: ' + daten.datum_aktualisiert;
+
+                    const container = document.getElementById('streamplanContainer');
+                    container.innerHTML = ''; // Leert den Lade-Text
+                    
+                    // Erstellt HTML für jeden Eintrag im Plan
+                    daten.plan.forEach(eintrag => {
+                        const div = document.createElement('div');
+                        div.className = 'plan-eintrag';
+                        div.innerHTML = `
+                            <span class="tag">${eintrag.tag}:</span>
+                            <span class="details">${eintrag.spiel}</span>
+                            <span class="uhrzeit">${eintrag.uhrzeit}</span>
+                        `;
+                        container.appendChild(div);
+                    });
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden des Streamplans:', error);
+                    document.getElementById('streamplanContainer').innerHTML = 
+                        '<p style="color: red;">Der Streamplan konnte leider nicht geladen werden.</p>';
+                });
+        }
+
+        // Ruft die Funktion auf, sobald die Seite geladen ist
+        ladeStreamplan();
+    </script>
+</body>
+</html>
