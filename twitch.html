@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lea_Rumi | Chaos Haus</title>
+    <title>Lea_Rumi | Chaos Haus - Twitch Stream</title>
     
     <style>
         /* 1. CSS-Variablen für die Farbpalette */
@@ -99,6 +99,8 @@
         .twitch-video, .twitch-chat {
             flex: 1;
             min-height: 400px; 
+            /* Setze hier die Hintergrundfarbe, damit der iFrame korrekt angezeigt wird */
+            background-color: #1f1f23; 
         }
         
         .twitch-video {
@@ -119,6 +121,12 @@
             text-decoration: none;
             border-bottom: 2px solid var(--farbe-orange);
             padding-bottom: 2px;
+        }
+
+        /* Sorgt dafür, dass die iFrames die volle Höhe/Breite des Containers einnehmen */
+        .twitch-video iframe, .twitch-chat iframe {
+            display: block;
+            border: none;
         }
 
         @media (max-width: 900px) {
@@ -152,7 +160,7 @@
             <div class="twitch-container">
                 <div class="twitch-video">
                     <iframe
-                        src="https://player.twitch.tv/?channel=lea_rumi&parent=https://learumi.github.io/&muted=false&autoplay=true"
+                        src="https://player.twitch.tv/?channel=lea_rumi&parent=learumi.github.io&muted=false&autoplay=true"
                         height="100%"
                         width="100%"
                         allowfullscreen="true">
@@ -164,7 +172,7 @@
                         frameborder="0"
                         scrolling="no"
                         id="chat_embed"
-                        src="https://www.twitch.tv/embed/lea_rumi/chat?parent=https://learumi.github.io/&darkpopout" 
+                        src="https://www.twitch.tv/embed/lea_rumi/chat?parent=learumi.github.io&darkpopout" 
                         height="100%"
                         width="100%">
                     </iframe>
