@@ -20,9 +20,8 @@
         body {
             font-family: 'Arial', sans-serif;
             color: var(--schriftfarbe-dunkel);
-            /* Der Farbverlauf (Gradient) als Hintergrund */
             background: linear-gradient(135deg, var(--farbe-orange), var(--farbe-hell-lila), var(--farbe-dunkel-lila));
-            min-height: 100vh; 
+            min-height: 100vh;
             margin: 0;
             padding: 0;
             display: flex;
@@ -31,11 +30,11 @@
 
         /* 3. Header- und Navigations-Bereich */
         header {
-            background-color: rgba(0, 0, 0, 0.4); 
+            background-color: rgba(0, 0, 0, 0.4);
             color: var(--schriftfarbe-hell);
             padding: 15px 40px;
             display: flex;
-            justify-content: space-between; 
+            justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -50,7 +49,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            display: flex; 
+            display: flex;
         }
 
         nav ul li {
@@ -73,15 +72,15 @@
         /* 4. Hauptinhaltsbereich */
         main {
             padding: 40px;
-            flex-grow: 1; 
+            flex-grow: 1;
         }
 
         .inhalts-box {
-            background-color: rgba(255, 255, 255, 0.9); 
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 900px; 
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -105,7 +104,20 @@
             font-weight: bold;
         }
         
-        /* Das Status-Styling ist jetzt nicht mehr nötig, da wir ein Bild verwenden */
+        /* WIEDER EINGEFÜGT: Styling für den reinen Text-Status */
+        .twitch-status {
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap; /* Verhindert Zeilenumbruch */
+        }
+        .status-live {
+            background-color: #ff0000; /* Rot für LIVE */
+        }
+        .status-offline {
+            background-color: #333333; /* Dunkelgrau für Offline */
+        }
     </style>
 </head>
 <body>
@@ -129,15 +141,8 @@
         <div class="inhalts-box">
             <h2>Willkommen auf der Startseite!</h2>
             
-            <p style="text-align: center; margin-bottom: 25px;">
-                <a href="https://www.twitch.tv/lea_rumi" target="_blank">
-                    <img 
-                        src="https://decapi.me/twitch/uptime/lea_rumi" 
-                        alt="Twitch Status Badge"
-                        style="border-radius: 5px; height: 30px; display: block; margin: 0 auto; border: none;"
-                    >
-                </a>
-                <span style="font-size: 0.85em; color: #555;">Klicke auf das Bild, um direkt zum Stream zu gelangen!</span>
+            <p>
+                Lea_Rumi ist derzeit: <span id="twitchStatusText">Lade Status...</span>
             </p>
             
             <p>Hallo und herzlich willkommen im Chaos Haus! Hier entsteht deine neue, individuelle Homepage mit dem fantastischen Farbverlauf, den du dir gewünscht hast.</p>
@@ -151,7 +156,34 @@
     </main>
 
     <script>
-        // *** Funktion: Neueste News laden (alte Funktion) ***
+        // *** 1. Funktion: Twitch Live/Offline Status abrufen (JSONP Workaround) ***
+        function ladeTwitchStatus() {
+            const channelName = 'lea_rumi';
+            const statusElement = document.getElementById('twitchStatusText');
+            
+            // Versucht, den Status über die JSONP-Methode der alten Twitch API abzurufen
+            const script = document.createElement('script');
+            script.src = `https://api.twitch.tv/kraken/streams/${channelName}?callback=handleTwitchStatus`;
+            
+            // Wir definieren die globale Callback-Funktion, die die Daten empfängt
+            window.handleTwitchStatus = function(data) {
+                if (data.stream) {
+                    // Stream-Objekt vorhanden = LIVE
+                    statusElement.innerHTML = `<span class="twitch-status status-live">LIVE</span>!`;
+                } else {
+                    // Stream-Objekt fehlt = OFFLINE
+                    statusElement.innerHTML = `<span class="twitch-status status-offline">OFFLINE</span>`;
+                }
+                // Cleanup
+                document.body.removeChild(script);
+                delete window.handleTwitchStatus;
+            };
+
+            // Fügt das Skript in den Body ein, um den Aufruf zu starten
+            document.body.appendChild(script);
+        }
+
+        // *** 2. Funktion: Neueste News laden ***
         function ladeNeuesteNews() {
             fetch('neuigkeiten.json')
                 .then(response => {
@@ -164,7 +196,6 @@
                         container.innerHTML = '<h3>Keine aktuellen Neuigkeiten verfügbar.</h3>';
                         return;
                     }
-                    // Findet den neuesten Post (höchste ID)
                     let neuestePost = daten.posts.reduce((max, post) => 
                         (post.id > max.id ? post : max), daten.posts[0]
                     );
@@ -187,7 +218,8 @@
                 });
         }
         
-        // Führt nur die News-Funktion aus
+        // Führt beide Funktionen aus, sobald die Seite geladen ist
+        ladeTwitchStatus();
         ladeNeuesteNews();
     </script>
 </body>
