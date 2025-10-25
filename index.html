@@ -84,7 +84,14 @@
             margin: 0 auto;
         }
 
-        /* NEUES Styling für den News-Block auf der Startseite */
+        /* Styling für den Begrüßungs-Titel */
+        #begruessungsTitel {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--farbe-dunkel-lila);
+        }
+        
+        /* Styling für den News-Block */
         .neueste-news-box {
             margin-top: 30px;
             padding: 25px;
@@ -124,12 +131,10 @@
 
     <main>
         <div class="inhalts-box">
-            <h2>Willkommen auf der Startseite!</h2>
+            <div id="begruessungInhalt">
+                <h2 id="begruessungsTitel">Lade Willkommensnachricht...</h2>
+                </div>
             
-            <p>Hallo und herzlich willkommen im Chaos Haus! Hier entsteht deine neue, individuelle Homepage mit dem fantastischen Farbverlauf, den du dir gewünscht hast.</p>
-            
-            <p style="margin-top: 20px;">Der Hintergrund wechselt nun fließend von Orange über Hell-Lila zu Dunkel-Lila. Den aktuellen Streamplan und alle Neuigkeiten findest du oben im Menü.</p>
-
             <div id="neuesteNews" class="neueste-news-box">
                 <h3>Lade neueste News...</h3>
             </div>
@@ -137,7 +142,39 @@
     </main>
 
     <script>
-        // *** Funktion: Neueste News laden ***
+        // *** 1. Funktion: Begrüßungstext laden ***
+        function ladeBegruessung() {
+            fetch('begruessung.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Fehler beim Laden der Begrüßungsdaten.');
+                    return response.json();
+                })
+                .then(daten => {
+                    const titelElement = document.getElementById('begruessungsTitel');
+                    const inhaltContainer = document.getElementById('begruessungInhalt');
+                    
+                    // Titel setzen
+                    titelElement.textContent = daten.titel || 'Willkommen';
+
+                    // Inhalt (Array von Absätzen) einfügen
+                    let htmlInhalt = '';
+                    if (daten.inhalt && Array.isArray(daten.inhalt)) {
+                        daten.inhalt.forEach(absatz => {
+                            htmlInhalt += `<p>${absatz}</p>`;
+                        });
+                    }
+                    
+                    // Fügt den generierten Inhalt NACH dem Titel ein
+                    titelElement.insertAdjacentHTML('afterend', htmlInhalt);
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der Begrüßung:', error);
+                    document.getElementById('begruessungInhalt').innerHTML = 
+                        '<h2 id="begruessungsTitel">Willkommen!</h2><p>Fehler beim Laden des Begrüßungstextes.</p>';
+                });
+        }
+        
+        // *** 2. Funktion: Neueste News laden ***
         function ladeNeuesteNews() {
             fetch('neuigkeiten.json')
                 .then(response => {
@@ -172,7 +209,8 @@
                 });
         }
         
-        // Führt nur die News-Funktion aus
+        // Führt beide Funktionen aus
+        ladeBegruessung();
         ladeNeuesteNews();
     </script>
 </body>
