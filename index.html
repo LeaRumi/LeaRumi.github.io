@@ -84,6 +84,26 @@
             max-width: 900px; /* Begrenzte Breite für besseres Lesen */
             margin: 0 auto;
         }
+
+        /* NEUES Styling für den News-Block auf der Startseite */
+        .neueste-news-box {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: var(--farbe-dunkel-lila);
+            color: var(--schriftfarbe-hell);
+            border-radius: 8px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .neueste-news-box h3 {
+            color: var(--farbe-orange);
+            margin-top: 0;
+        }
+        .neueste-news-box a {
+            color: var(--farbe-hell-lila);
+            text-decoration: underline;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -108,9 +128,56 @@
             <h2>Willkommen auf der Startseite!</h2>
             <p>Hallo und herzlich willkommen im Chaos Haus! Hier entsteht deine neue, individuelle Homepage mit dem fantastischen Farbverlauf, den du dir gewünscht hast.</p>
             
-            <p style="margin-top: 20px;">**Der Farbverlauf:** Der Hintergrund wechselt nun fließend von Orange über Hell-Lila zu Dunkel-Lila. Wenn Sie die Farben anpassen möchten, ändern Sie einfach die Codes bei `--farbe-orange`, `--farbe-hell-lila` und `--farbe-dunkel-lila` oben im `<style>`-Block.</p>
+            <p style="margin-top: 20px;">Der Hintergrund wechselt nun fließend von Orange über Hell-Lila zu Dunkel-Lila. Den aktuellen Streamplan und alle Neuigkeiten findest du oben im Menü.</p>
+
+            <div id="neuesteNews" class="neueste-news-box">
+                <h3>Lade neueste News...</h3>
+            </div>
         </div>
     </main>
 
-    </body>
+    <script>
+        function ladeNeuesteNews() {
+            fetch('neuigkeiten.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Fehler beim Laden der News-Daten.');
+                    return response.json();
+                })
+                .then(daten => {
+                    const container = document.getElementById('neuesteNews');
+                    
+                    // 1. Prüfen, ob Posts existieren
+                    if (!daten.posts || daten.posts.length === 0) {
+                        container.innerHTML = '<h3>Keine aktuellen Neuigkeiten verfügbar.</h3>';
+                        return;
+                    }
+                    
+                    // 2. Den Post mit der höchsten ID finden (WICHTIG: Funktioniert nur, wenn IDs als Zahlen gespeichert sind)
+                    let neuestePost = daten.posts.reduce((max, post) => 
+                        (post.id > max.id ? post : max), daten.posts[0]
+                    );
+
+                    // 3. HTML-Ausgabe formatieren
+                    container.innerHTML = `
+                        <h3>🔥 ${neuestePost.titel}</h3>
+                        <p style="font-size: 0.9em; color: var(--farbe-hell-lila);">
+                            (${neuestePost.datum} | Kategorie: ${neuestePost.kategorie})
+                        </p>
+                        <p>${neuestePost.inhalt.substring(0, 150)}...</p> 
+                        <p style="text-align: right; margin-top: 15px;">
+                            <a href="neuigkeiten.html">Alle News ansehen →</a>
+                        </p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Fehler beim Laden der News:', error);
+                    document.getElementById('neuesteNews').innerHTML = 
+                        '<h3>Fehler beim Laden der News-Daten.</h3><p>Bitte stellen Sie sicher, dass die Datei neuigkeiten.json existiert und IDs enthält.</p>';
+                });
+        }
+        
+        // Führt die Funktion aus, sobald die Seite geladen ist
+        ladeNeuesteNews();
+    </script>
+</body>
 </html>
