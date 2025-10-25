@@ -8,12 +8,12 @@
     <style>
         /* 1. CSS-Variablen für die Farbpalette */
         :root {
-            --farbe-orange: #FF7F50;       /* Coral (Anfang) */
-            --farbe-hell-lila: #DDA0DD;    /* Plum (Mitte) */
-            --farbe-dunkel-lila: #4B0082;  /* Indigo (Ende) */
+            --farbe-orange: #FF7F50;
+            --farbe-hell-lila: #DDA0DD;
+            --farbe-dunkel-lila: #4B0082;
             --schriftfarbe-hell: #FFFFFF;
             --schriftfarbe-dunkel: #333333;
-            --menu-hover: #5D3FD3;         /* Dunkleres Lila für Hover */
+            --menu-hover: #5D3FD3;
         }
 
         /* 2. Allgemeine Formatierung und Hintergrund */
@@ -104,19 +104,13 @@
             font-weight: bold;
         }
         
-        /* WIEDER EINGEFÜGT: Styling für den reinen Text-Status */
-        .twitch-status {
-            padding: 5px 8px;
-            border-radius: 4px;
+        /* Zusätzliches Styling für den Button-Look des Badges */
+        .twitch-status-wrapper {
+            text-align: center;
+            margin-bottom: 25px;
+            /* Passt den Look an den Text-Status an */
+            font-size: 1.1em; 
             font-weight: bold;
-            color: white;
-            white-space: nowrap; /* Verhindert Zeilenumbruch */
-        }
-        .status-live {
-            background-color: #ff0000; /* Rot für LIVE */
-        }
-        .status-offline {
-            background-color: #333333; /* Dunkelgrau für Offline */
         }
     </style>
 </head>
@@ -141,9 +135,19 @@
         <div class="inhalts-box">
             <h2>Willkommen auf der Startseite!</h2>
             
-            <p>
-                Lea_Rumi ist derzeit: <span id="twitchStatusText">Lade Status...</span>
-            </p>
+            <div class="twitch-status-wrapper">
+                Lea_Rumi ist derzeit: 
+                <a href="https://www.twitch.tv/lea_rumi" target="_blank" style="text-decoration: none;">
+                    <img 
+                        src="https://decapi.me/twitch/uptime/lea_rumi" 
+                        alt="Twitch Status"
+                        style="vertical-align: middle; border-radius: 5px; height: 30px; border: none; margin-left: 10px;"
+                    >
+                </a>
+                <p style="font-size: 0.8em; font-weight: normal; color: #777; margin-top: 5px;">
+                    Klicken Sie auf den Status, um direkt zum Stream zu gelangen.
+                </p>
+            </div>
             
             <p>Hallo und herzlich willkommen im Chaos Haus! Hier entsteht deine neue, individuelle Homepage mit dem fantastischen Farbverlauf, den du dir gewünscht hast.</p>
             
@@ -156,34 +160,7 @@
     </main>
 
     <script>
-        // *** 1. Funktion: Twitch Live/Offline Status abrufen (JSONP Workaround) ***
-        function ladeTwitchStatus() {
-            const channelName = 'lea_rumi';
-            const statusElement = document.getElementById('twitchStatusText');
-            
-            // Versucht, den Status über die JSONP-Methode der alten Twitch API abzurufen
-            const script = document.createElement('script');
-            script.src = `https://api.twitch.tv/kraken/streams/${channelName}?callback=handleTwitchStatus`;
-            
-            // Wir definieren die globale Callback-Funktion, die die Daten empfängt
-            window.handleTwitchStatus = function(data) {
-                if (data.stream) {
-                    // Stream-Objekt vorhanden = LIVE
-                    statusElement.innerHTML = `<span class="twitch-status status-live">LIVE</span>!`;
-                } else {
-                    // Stream-Objekt fehlt = OFFLINE
-                    statusElement.innerHTML = `<span class="twitch-status status-offline">OFFLINE</span>`;
-                }
-                // Cleanup
-                document.body.removeChild(script);
-                delete window.handleTwitchStatus;
-            };
-
-            // Fügt das Skript in den Body ein, um den Aufruf zu starten
-            document.body.appendChild(script);
-        }
-
-        // *** 2. Funktion: Neueste News laden ***
+        // *** Funktion: Neueste News laden ***
         function ladeNeuesteNews() {
             fetch('neuigkeiten.json')
                 .then(response => {
@@ -218,8 +195,7 @@
                 });
         }
         
-        // Führt beide Funktionen aus, sobald die Seite geladen ist
-        ladeTwitchStatus();
+        // Führt nur die News-Funktion aus
         ladeNeuesteNews();
     </script>
 </body>
