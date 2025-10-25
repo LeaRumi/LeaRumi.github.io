@@ -2,10 +2,25 @@
   "titel": "Aktuelle Announcements",
   "posts": [
     {
+      "id": 3,
       "datum": "25.10.2025",
       "titel": "Neue Homepage ist online!",
       "inhalt": "Willkommen auf unserer brandneuen Website, gehostet über GitHub Pages! Alle wichtigen Infos, der Streamplan und die Verlinkungen sind jetzt an einem Ort gesammelt.",
       "kategorie": "Website"
+    },
+    {
+      "id": 2,
+      "datum": "20.10.2025",
+      "titel": "24h Charity Stream erfolgreich!",
+      "inhalt": "Vielen Dank an die Community! Wir haben gestern Abend die Spendenziel-Marke geknackt. Ihr seid die Besten! Die finalen Zahlen kommen bald.",
+      "kategorie": "Twitch"
+    },
+    {
+      "id": 1,
+      "datum": "15.10.2025",
+      "titel": "Neues Intro und Outro",
+      "inhalt": "Haben die Grafiken aktualisiert und ein neues Intro für den Stream erstellt. Was haltet ihr davon? Lasst gerne Feedback im Discord da!",
+      "kategorie": "Design"
     }
   ]
 }
