@@ -1,0 +1,11 @@
+{
+  "titel": "Aktuelle Announcements",
+  "posts": [
+    {
+      "datum": "25.10.2025",
+      "titel": "Neue Homepage ist online!",
+      "inhalt": "Willkommen auf unserer brandneuen Website, gehostet über GitHub Pages! Alle wichtigen Infos, der Streamplan und die Verlinkungen sind jetzt an einem Ort gesammelt.",
+      "kategorie": "Website"
+    }
+  ]
+}
