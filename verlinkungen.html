@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lea_Rumi | Verlinkungen</title>
+    
+    <style>
+        /* CSS-Variablen */
+        :root {
+            --farbe-orange: #FF7F50;
+            --farbe-hell-lila: #DDA0DD;
+            --farbe-dunkel-lila: #4B0082;
+            --schriftfarbe-hell: #FFFFFF;
+            --schriftfarbe-dunkel: #333333;
+            --menu-hover: #5D3FD3;
+            --discord-gruen: #5865F2; /* Discord-Farbe */
+        }
+
+        /* Allgemeine Formatierung */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--schriftfarbe-dunkel);
+            background: linear-gradient(135deg, var(--farbe-orange), var(--farbe-hell-lila), var(--farbe-dunkel-lila));
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header- und Navigations-Bereich */
+        header {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: var(--schriftfarbe-hell);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-titel h1 {
+            font-size: 2.2em;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--schriftfarbe-hell);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.aktiv {
+            background-color: var(--menu-hover);
+        }
+
+        /* Hauptinhaltsbereich */
+        main {
+            padding: 40px;
+            flex-grow: 1;
+        }
+
+        .inhalts-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center; /* Zentriert die Link-Elemente */
+        }
+
+        /* Styling für die Link-Buttons */
+        .link-button {
+            display: block;
+            width: 80%; /* Button-Breite */
+            max-width: 500px;
+            margin: 15px auto;
+            padding: 15px 20px;
+            background-color: var(--farbe-dunkel-lila);
+            color: var(--schriftfarbe-hell);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-button:hover {
+            background-color: var(--menu-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Spezifisches Styling für Discord */
+        .link-discord {
+            background-color: var(--discord-gruen);
+        }
+        .link-discord:hover {
+            background-color: #4e5d94; /* Dunkleres Discord-Blau */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-titel">
+            <h1>Lea_Rumi | Chaos Haus</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="streamplan.html">Streamplan</a></li>
+                <li><a href="neuigkeiten.html">Neuigkeiten/Announcements</a></li>
+                <li><a href="verlinkungen.html" class="aktiv">Verlinkungen</a></li>
+                <li><a href="twitch.html">Twitch</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="inhalts-box">
+            <h2>🔗 Alle meine Links</h2>
+            <p>Finde mich auf allen wichtigen Plattformen:</p>
+            
+            <a href="https://www.twitch.tv/lea_rumi" target="_blank" class="link-button link-twitch">🔴 Twitch Stream</a>
+            
+            <a href="https://discord.gg/Qj8ZZtTeWG" target="_blank" class="link-button link-discord">💬 Discord Server</a>
+            
+            <a href="https://www.tiktok.com/@learumittv?is_from_webapp=1&sender_device=pc" target="_blank" class="link-button">🎵 TikTok</a>
+            
+            <hr style="width: 50%; margin: 30px auto; border-color: #eee;">
+            
+            <div id="discord-widget-container" style="text-align: center; margin-top: 30px;">
+              <h3>Discord Community-Vorschau</h3>
+                <iframe src="https://discord.com/widget?id=1427015989161103563&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+              <p style="font-size: 0.9em; color: #555; margin-top: 10px;">
+                Sehen Sie, wer gerade online ist, und treten Sie direkt bei!
+              </p>
+            </div>
+            
+            <hr style="width: 50%; margin: 30px auto; border-color: #eee;">
+            
+            <a href="index.html" class="link-button" style="background-color: var(--farbe-orange);">🏠 Zur Startseite</a>
+        </div>
+    </main>
+</body>
+</html>
