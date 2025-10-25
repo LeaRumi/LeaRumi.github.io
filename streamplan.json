@@ -1,0 +1,41 @@
+{
+  "titel": "Streamplan der Woche",
+  "datum_aktualisiert": "2025-10-25",
+  "plan": [
+    {
+      "tag": "Montag",
+      "spiel": "Chill-Talk & Community-Games",
+      "uhrzeit": "19:00 Uhr"
+    },
+    {
+      "tag": "Dienstag",
+      "spiel": "The Legend of Rumi (Indie-Game)",
+      "uhrzeit": "20:30 Uhr"
+    },
+    {
+      "tag": "Mittwoch",
+      "spiel": "Kein Stream",
+      "uhrzeit": "-"
+    },
+    {
+      "tag": "Donnerstag",
+      "spiel": "Retro-Night: SNES Classics",
+      "uhrzeit": "19:30 Uhr"
+    },
+    {
+      "tag": "Freitag",
+      "spiel": "Community-Abend: Fall Guys",
+      "uhrzeit": "20:00 Uhr"
+    },
+    {
+      "tag": "Samstag",
+      "spiel": "Special Event: 24h Chaos Stream!",
+      "uhrzeit": "12:00 Uhr"
+    },
+    {
+      "tag": "Sonntag",
+      "spiel": "Entspanntes Ausklingen",
+      "uhrzeit": "21:00 Uhr"
+    }
+  ]
+}
