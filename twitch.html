@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lea_Rumi | Chaos Haus - Twitch Stream</title>
+    
+    <style>
+        /* 1. CSS-Variablen für die Farbpalette */
+        :root {
+            --farbe-orange: #FF7F50;       
+            --farbe-hell-lila: #DDA0DD;    
+            --farbe-dunkel-lila: #4B0082;  
+            --schriftfarbe-hell: #FFFFFF;
+            --schriftfarbe-dunkel: #333333;
+            --menu-hover: #5D3FD3;         
+        }
+
+        /* 2. Allgemeine Formatierung und Hintergrund */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--schriftfarbe-dunkel);
+            background: linear-gradient(135deg, var(--farbe-orange), var(--farbe-hell-lila), var(--farbe-dunkel-lila));
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 3. Header- und Navigations-Bereich */
+        header {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: var(--schriftfarbe-hell);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-titel h1 {
+            font-size: 2.2em;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--schriftfarbe-hell);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.aktiv {
+            background-color: var(--menu-hover);
+        }
+
+        /* 4. Hauptinhaltsbereich */
+        main {
+            padding: 40px;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inhalts-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 1200px; 
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Layout für Stream und Chat */
+        .twitch-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .twitch-video, .twitch-chat {
+            flex: 1;
+            min-height: 400px; 
+        }
+        
+        .twitch-video {
+            flex-basis: 65%; 
+        }
+        
+        .twitch-chat {
+            flex-basis: 30%; 
+        }
+
+        .chat-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .chat-link a {
+            color: var(--farbe-dunkel-lila);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid var(--farbe-orange);
+            padding-bottom: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .twitch-video, .twitch-chat {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-titel">
+            <h1>Lea_Rumi | Chaos Haus</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="streamplan.html">Streamplan</a></li>
+                <li><a href="neuigkeiten.html">Neuigkeiten/Announcements</a></li>
+                <li><a href="verlinkungen.html">Verlinkungen</a></li>
+                <li><a href="twitch.html" class="aktiv">Twitch</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="inhalts-box">
+            <h2>Live auf Twitch</h2>
+            
+            <div class="twitch-container">
+                <div class="twitch-video">
+                    <iframe
+                        src="https://player.twitch.tv/?channel=lea_rumi&parent=IHRE_GITHUB_DOMAIN&muted=false&autoplay=true"
+                        height="100%"
+                        width="100%"
+                        allowfullscreen="true">
+                    </iframe>
+                </div>
+                
+                <div class="twitch-chat">
+                    <iframe
+                        frameborder="0"
+                        scrolling="no"
+                        id="chat_embed"
+                        src="https://www.twitch.tv/embed/lea_rumi/chat?parent=IHRE_GITHUB_DOMAIN&darkpopout" 
+                        height="100%"
+                        width="100%">
+                    </iframe>
+                </div>
+            </div>
+            
+            <div class="chat-link">
+                <p>
+                    Ihr wollt auch im Chat schreiben? Dann gelangt ihr 
+                    <a href="https://twitch.tv/lea_rumi" target="_blank">hier zu Twitch!</a>
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
