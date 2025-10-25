@@ -104,6 +104,21 @@
             text-decoration: underline;
             font-weight: bold;
         }
+        /* Styling für den Live/Offline Status */
+        .twitch-status {
+            margin-top: 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            color: white;
+        }
+        .status-live {
+            background-color: #ff0000; /* Rot für LIVE */
+        }
+        .status-offline {
+            background-color: #333333; /* Dunkelgrau für Offline */
+        }
     </style>
 </head>
 <body>
@@ -126,6 +141,10 @@
     <main>
         <div class="inhalts-box">
             <h2>Willkommen auf der Startseite!</h2>
+            <p>
+                <span id="twitchStatusText">Lade Livestream-Status...</span>
+            </p>
+            
             <p>Hallo und herzlich willkommen im Chaos Haus! Hier entsteht deine neue, individuelle Homepage mit dem fantastischen Farbverlauf, den du dir gewünscht hast.</p>
             
             <p style="margin-top: 20px;">Der Hintergrund wechselt nun fließend von Orange über Hell-Lila zu Dunkel-Lila. Den aktuellen Streamplan und alle Neuigkeiten findest du oben im Menü.</p>
@@ -137,6 +156,28 @@
     </main>
 
     <script>
+        // *** 1. Funktion: Twitch Live/Offline Status abrufen ***
+        function ladeTwitchStatus() {
+            // Dies nutzt den Twitch-Service, der den Status als Badge liefert
+            const channelName = 'lea_rumi';
+            const statusElement = document.getElementById('twitchStatusText');
+            
+            // Abruf des Status-Bildes von Twitch
+            const img = new Image();
+            img.onload = function() {
+                // Wenn das Bild erfolgreich geladen wird, ist der Stream OFFLINE (Standard-Verhalten)
+                statusElement.innerHTML = `Lea-Rumi Livestream derzeit <span class="twitch-status status-offline">OFFLINE</span>`;
+            };
+            img.onerror = function() {
+                // Wenn das Bild NICHT geladen werden kann (Fehler 404), ist der Stream LIVE!
+                statusElement.innerHTML = `Lea-Rumi Livestream derzeit <span class="twitch-status status-live">LIVE</span>!`;
+            };
+            
+            // WICHTIG: Twitch liefert bei Offline ein gültiges Bild und bei LIVE einen 404 Fehler
+            img.src = `https://decapi.me/twitch/uptime/${channelName}?json=true&random=${new Date().getTime()}`;
+        }
+        
+        // *** 2. Funktion: Neueste News laden (alte Funktion) ***
         function ladeNeuesteNews() {
             fetch('neuigkeiten.json')
                 .then(response => {
@@ -145,19 +186,14 @@
                 })
                 .then(daten => {
                     const container = document.getElementById('neuesteNews');
-                    
-                    // 1. Prüfen, ob Posts existieren
                     if (!daten.posts || daten.posts.length === 0) {
                         container.innerHTML = '<h3>Keine aktuellen Neuigkeiten verfügbar.</h3>';
                         return;
                     }
-                    
-                    // 2. Den Post mit der höchsten ID finden (WICHTIG: Funktioniert nur, wenn IDs als Zahlen gespeichert sind)
                     let neuestePost = daten.posts.reduce((max, post) => 
                         (post.id > max.id ? post : max), daten.posts[0]
                     );
 
-                    // 3. HTML-Ausgabe formatieren
                     container.innerHTML = `
                         <h3>🔥 ${neuestePost.titel}</h3>
                         <p style="font-size: 0.9em; color: var(--farbe-hell-lila);">
@@ -172,12 +208,15 @@
                 .catch(error => {
                     console.error('Fehler beim Laden der News:', error);
                     document.getElementById('neuesteNews').innerHTML = 
-                        '<h3>Fehler beim Laden der News-Daten.</h3><p>Bitte stellen Sie sicher, dass die Datei neuigkeiten.json existiert und IDs enthält.</p>';
+                        '<h3>Fehler beim Laden der News-Daten.</h3>';
                 });
         }
         
-        // Führt die Funktion aus, sobald die Seite geladen ist
+        // Führt beide Funktionen aus, sobald die Seite geladen ist
+        ladeTwitchStatus();
         ladeNeuesteNews();
     </script>
+</body>
+</html>
 </body>
 </html>
