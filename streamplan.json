@@ -4,38 +4,38 @@
   "plan": [
     {
       "tag": "Montag",
-      "spiel": "Chill-Talk & Community-Games",
+      "spiel": "Überraschung",
       "uhrzeit": "19:00 Uhr"
     },
     {
       "tag": "Dienstag",
-      "spiel": "The Legend of Rumi (Indie-Game)",
-      "uhrzeit": "20:30 Uhr"
+      "spiel": "Minecraft + Marbles on Stream",
+      "uhrzeit": "19:00 Uhr"
     },
     {
       "tag": "Mittwoch",
+      "spiel": "Marbles on Stream",
+      "uhrzeit": "20:00 Uhr"
+    },
+    {
+      "tag": "Donnerstag",
       "spiel": "Kein Stream",
       "uhrzeit": "-"
     },
     {
-      "tag": "Donnerstag",
-      "spiel": "Retro-Night: SNES Classics",
-      "uhrzeit": "19:30 Uhr"
-    },
-    {
       "tag": "Freitag",
-      "spiel": "Community-Abend: Fall Guys",
-      "uhrzeit": "20:00 Uhr"
+      "spiel": "Kein Stream",
+      "uhrzeit": "-"
     },
     {
       "tag": "Samstag",
-      "spiel": "Special Event: 24h Chaos Stream!",
-      "uhrzeit": "12:00 Uhr"
+      "spiel": "Just Chatting, Musik + Überraschung",
+      "uhrzeit": "19:00 Uhr"
     },
     {
       "tag": "Sonntag",
-      "spiel": "Entspanntes Ausklingen",
-      "uhrzeit": "21:00 Uhr"
+      "spiel": "Just Chatting + Überraschung",
+      "uhrzeit": "19:00 Uhr"
     }
   ]
 }
